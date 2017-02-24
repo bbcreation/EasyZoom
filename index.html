@@ -12,17 +12,9 @@
 	<link rel="stylesheet" href="css/easyzoom.css" />
 
 	<!--
-	EasyZoom by Matt Hinchliffe <http://maketea.co.uk>
-	Find out more at GitHub <http://github.com/i-like-robots/EasyZoom>
+	EasyZoomDPR by Tobias Bernrieder <http://github.com/agorodezki/>
+	Find out more at GitHub <http://github.com/agorodezki/EasyZoomDPR>
 	-->
-
-	<!-- Google Analytics tracking code -->
-	<script>
-		var _gaq=[['_setAccount','UA-2508361-9'],['_trackPageview']];
-		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-		g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-		s.parentNode.insertBefore(g,s)}(document,'script'));
-	</script>
 
 </head>
 <body>
@@ -42,12 +34,12 @@
 			</header>
 
 			<p>
-				EasyZoom is an elegant, highly optimised <a href="http://www.jquery.com">jQuery</a> image zoom and panning plugin based on the <a href="http://cssglobe.com/lab/easyzoom/easyzoom.html">original work</a> by <a href="http://grakalic.com/">Alen Grakalic</a>. EasyZoom supports touch-enabled devices and is easily customisable with CSS.
+				EasyZoom is an elegant, highly optimised <a href="http://www.jquery.com">jQuery</a> image zoom and panning plugin based on the <a href="http://cssglobe.com/lab/easyzoom/easyzoom.html">original work</a> by <a href="http://grakalic.com/">Alen Grakalic</a> and the <a href="https://github.com/i-like-robots/EasyZoom">original work</a> by <a href="http://maketea.co.uk/">Matt Hinchliffe</a>. EasyZoom supports device pixel ratio greater than 1, touch-enabled devices and is easily customisable with CSS.
 			</p>
 
 			<p style="text-align:center;">
-				<a class="button" href="https://github.com/i-like-robots/EasyZoom/zipball/master">Download</a>
-				<a class="button" href="https://github.com/i-like-robots/EasyZoom">View project on GitHub</a>
+				<a class="button" href="https://github.com/agorodezki/EasyZoomDPR/zipball/master">Download</a>
+				<a class="button" href="https://github.com/agorodezki/EasyZoomDPR">View project on GitHub</a>
 			</p>
 
 		</section>
@@ -329,7 +321,7 @@
 					Removes all events and elements created and attached by EasyZoom.
 				</dd>
 				<dt>
-					<code>.swap(<var>standardSrc</var>, <var>zoomSrc</var>, <var>[srcset]</var>)</code>
+					<code>.swap(<var>standardSrc</var>, <var>zoomSrc</var>, <var>[standard-srcset]</var>, <var>[zoom-srcset]</var>, <var>[standard-sizes]</var>, <var>[zoom-sizes]</var>)</code>
 				</dt>
 				<dd>
 					Easily switch the standard and zoom image sources. To display retina images via the srcset attribute, use the optional <var>srcset</var> argument.
@@ -340,7 +332,7 @@
 
 	</div>
 
-	<a href="https://github.com/i-like-robots/EasyZoom">
+	<a href="https://github.com/agorodezki/EasyZoomDPR">
 		<img style="position:absolute; top:0; right:0; border:0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" />
 	</a>
 

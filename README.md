@@ -1,6 +1,6 @@
 # EasyZoom, jQuery image zoom plugin
 
-[EasyZoom][1] is an elegant, highly optimised [jQuery][2] image zoom and panning plugin based on the [original work][3] by [Alen Grakalic][4]. EasyZoom supports touch-enabled devices and is easily customisable with CSS.
+[EasyZoom][1] is an elegant, highly optimised [jQuery][2] image zoom and panning plugin based on the [original work][3] by [Alen Grakalic][4]. EasyZoom supports device pixel ratio greater than 1, touch-enabled devices and is easily customisable with CSS.
 
 ## Dependencies
 
@@ -12,7 +12,7 @@ Compatible with jQuery 1.x, 2.x and 3.x (inc. slim).
 
 Have a bug? Please report an issues on the [Github project page][1]
 
-https://github.com/i-like-robots/EasyZoom/issues
+https://github.com/agorodezki/EasyZoomDPR/issues
 
 ## Versioning
 
@@ -27,14 +27,16 @@ This work is licensed under a [MIT License][5].
 ## Authors
 
 This jQuery plugin was written by [Matt Hinchliffe][6].
+All retina changes by [Tobias Bernrieder][7].
 
 Thanks also for contributions from:
 
 - [Steve Lindstrom](https://github.com/slindstr)
 
-[1]: http://github.com/i-like-robots/EasyZoom/
+[1]: http://github.com/agorodezki/EasyZoomDPR/
 [2]: http://www.jquery.com
 [3]: http://cssglobe.com/lab/easyzoom/easyzoom.html
 [4]: http://grakalic.com
 [5]: http://opensource.org/licenses/MIT
 [6]: http://maketea.co.uk
+[7]: http://github.com/agorodezki/

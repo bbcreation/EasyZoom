@@ -1,19 +1,21 @@
 {
   "name": "easyzoom",
   "version": "2.6.0",
-  "description": "EasyZoom is an elegant, highly optimised jQuery image zoom and panning plugin based on the original work by Alen Grakalic.",
+  "description": "EasyZoomDPR is an elegant, highly optimised jQuery image zoom and panning plugin based on the original work by Alen Grakalic and Matt Hinchliffe.",
   "keywords": [
     "zoom",
     "image",
     "flyout",
-    "panning"
+    "panning",
+    "magnifier",
+    "retina"
   ],
-  "author": "Matt Hinchliffe",
+  "author": "Tobias Bernrieder",
   "repository": {
     "type": "git",
-    "url": "git@github.com:i-like-robots/EasyZoom.git"
+    "url": "git@github.com:agorodezki/EasyZoomDPR.git"
   },
-  "homepage": "https://github.com/i-like-robots/EasyZoom",
+  "homepage": "https://github.com/agorodezki/EasyZoomDPR",
   "license": "MIT",
   "scripts": {
     "test": "grunt jshint && open test/runner.html"
