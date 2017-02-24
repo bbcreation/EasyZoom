@@ -16,7 +16,6 @@
     QUnit.module("Setup", lifecycle);
 
     QUnit.test("$(collection).easyZoom()", function (assert) {
-        assert.ok(api.$link.length, "Zoom link is found");
         assert.ok(api.$image.length, "Smaller image is found");
         assert.ok(api.opts.inlineOption, "Data attributes can be options");
         assert.ok(api.hasOwnProperty("$flyout"), "Flyout is created");
@@ -109,7 +108,7 @@
         assert.equal(api.$target.hasClass("is-ready"), false, "'Ready' state class has been removed");
         assert.equal(api.$target.hasClass("is-error"), false, "'Error' state class has been removed");
         assert.equal(api.$image.attr("src"), standard, "Standard image SRC changed");
-        assert.equal(api.$link.attr("href"), zoom, "Zoom image HREF changed");
+        assert.equal(api.$image.attr("data-zoom-image"), zoom, "Zoom image HREF changed");
 
         api.opts.onShow = function () {
             assert.equal(api.$zoom.attr("src"), zoom, "Zoom image loaded with new SRC");
@@ -121,29 +120,38 @@
         api.show();
     });
 
-    QUnit.test(".swap(standard, zoom, srcsetString)", function (assert) {
-        assert.expect(1);
+    QUnit.test(".swap(standard, zoom, standardSrcsetString, zoomSrcsetString, standardSizesString, zoomSizesString)", function (assert) {
+        assert.expect(4);
 
         var standard = "../example-images/test_standard.jpg";
         var zoom = "../example-images/test_zoom.jpg";
         var srcsetString = "../example-images/test_standard.jpg 1x, ../example-images/test_zoom.jpg 2x";
+        var sizesString = '(min-width: 1000px) 640px, 1280px';
 
-        api.swap(standard, zoom, srcsetString);
+        api.swap(standard, zoom, srcsetString, srcsetString, sizesString, sizesString);
 
         assert.equal(api.$image.attr("srcset"), srcsetString, "Standard image SRCSET changed");
+        assert.equal(api.$image.attr("sizes"), sizesString, "Standard image SIZES changed");
+        assert.equal(api.$image.attr("data-zoom-srcset"), srcsetString, "Standard link DATA-SRCSET changed");
+        assert.equal(api.$image.attr("data-zoom-sizes"), sizesString, "Standard link DATA-SIZES changed");
     });
 
-    QUnit.test(".swap(standard, zoom, srcsetArray)", function (assert) {
-        assert.expect(1);
+    QUnit.test(".swap(standard, zoom, standardSrcsetArray, zoomSrcsetArray, standardSizesArray, zoomSizesArray)", function (assert) {
+        assert.expect(4);
 
         var standard = "../example-images/test_standard.jpg";
         var zoom = "../example-images/test_zoom.jpg";
         var srcsetArray = ['../example-images/test_standard.jpg 1x', '../example-images/test_zoom.jpg 2x'];
         var srcsetString = '../example-images/test_standard.jpg 1x,../example-images/test_zoom.jpg 2x';
+        var sizesArray = ['(min-width: 1000px) 640px', '1280px'];
+        var sizesString = '(min-width: 1000px) 640px,1280px';
 
-        api.swap(standard, zoom, srcsetArray);
+        api.swap(standard, zoom, srcsetArray, srcsetArray, sizesArray, sizesArray);
 
         assert.equal(api.$image.attr("srcset"), srcsetString, "Standard image SRCSET changed");
+        assert.equal(api.$image.attr("sizes"), sizesString, "Standard image SIZES changed");
+        assert.equal(api.$image.attr("data-zoom-srcset"), srcsetString, "Standard link DATA-SRCSET changed");
+        assert.equal(api.$image.attr("data-zoom-sizes"), sizesString, "Standard link DATA-SIZES changed");
     });
 
     QUnit.test(".teardown()", function (assert) {
@@ -163,12 +171,12 @@
 
     QUnit.module("Internals", lifecycle);
 
-    QUnit.test("._loadImage(path, callback)", function (assert) {
+    QUnit.test("._loadImage(path, srcset, sizes, callback)", function (assert) {
         var done = assert.async();
 
         assert.expect(5);
 
-        api._loadImage(api.$link.attr("href"), function () {
+        api._loadImage(api.$image.attr("data-zoom-image"), api.$image.data("zoom-srcset"), api.$image.data("zoom-sizes"), function () {
             assert.equal(api.isReady, true, "Ready flag set to true");
             assert.equal(api.$notice.parent().length, 0, "Loading notice detached from DOM");
             assert.equal(api.$target.hasClass("is-loading"), false, "Loading class removed from target");
@@ -200,6 +208,8 @@
     });
 
     QUnit.test("_move(e)", function (assert) {
+        var ratio = window.devicePixelRatio > 1 ? 2 : 1;
+
         var done = assert.async();
 
         assert.expect(5);
@@ -235,16 +245,16 @@
             left = parseInt(api.$zoom.css("left"), 10);
             top = parseInt(api.$zoom.css("top"), 10);
 
-            assert.equal(left, -20, "2x scale zoom image moved 20px left given 10px offset");
-            assert.equal(top, -20, "2x scale zoom image moved 20px top given 10px offset");
+            assert.equal(left, -20 / ratio, "2x scale zoom image moved 20px left given 10px offset");
+            assert.equal(top, -20 / ratio, "2x scale zoom image moved 20px top given 10px offset");
 
             api._move(mock_2);
 
             left = parseInt(api.$zoom.css("left"), 10);
             top = parseInt(api.$zoom.css("top"), 10);
 
-            assert.equal(left, -200, "2x scale zoom image moved 200px left given 100px offset");
-            assert.equal(top, -200, "2x scale zoom image moved 200px top given 100px offset");
+            assert.equal(left, -200 / ratio, "2x scale zoom image moved 200px left given 100px offset");
+            assert.equal(top, -200 / ratio, "2x scale zoom image moved 200px top given 100px offset");
 
             api._move(mock_3);
 

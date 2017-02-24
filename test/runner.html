@@ -17,9 +17,13 @@
 	<div class="container">
 
 		<div class="easyzoom" data-inline-option="true">
-			<a href="../example-images/1_zoom.jpg">
-				<img src="../example-images/1_standard.jpg" alt="" width="640" height="360" />
-			</a>
+			<picture>
+				<img src="../example-images/test_standard.jpg" alt=""
+					 data-zoom-image="../example-images/test_zoom.jpg"
+					 data-zoom-srcset="../example-images/test_zoom.jpg 1x, ../example-images/test_zoom@2x.jpg 2x"
+					 data-zoom-sizes="(min-width: 1000px) 640px, 1280px"
+					 width="640" height="360">
+			</picture>
 			<div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 999; background: rgba(255, 255, 255, .5);"></div>
 		</div>
 

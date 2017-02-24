@@ -27,10 +27,13 @@
         errorDuration: 2500,
 
         // Attribute to retrieve the zoom image URL from.
-        linkAttribute: 'href',
+        zoomImageAttribute: 'data-zoom-image',
 
-        // Prevent clicks on the zoom image link.
-        preventClicks: true,
+        // Data attribute to retrieve the zoom image srcset from.
+        zoomSrcsetAttribute: 'data-zoom-srcset',
+
+        // Data attribute to retrieve the zoom image sizes from.
+        zoomSizesAttribute: 'data-zoom-sizes',
 
         // Callback function to execute before the flyout is displayed.
         beforeShow: $.noop,
@@ -67,7 +70,6 @@
      * @private
      */
     EasyZoom.prototype._init = function() {
-        this.$link   = this.$target.find('a');
         this.$image  = this.$target.find('img');
 
         this.$flyout = $('<div class="easyzoom-flyout" />');
@@ -77,10 +79,6 @@
             'mousemove.easyzoom touchmove.easyzoom': $.proxy(this._onMove, this),
             'mouseleave.easyzoom touchend.easyzoom': $.proxy(this._onLeave, this),
             'mouseenter.easyzoom touchstart.easyzoom': $.proxy(this._onEnter, this)
-        });
-
-        this.opts.preventClicks && this.$target.on('click.easyzoom', function(e) {
-            e.preventDefault();
         });
     };
 
@@ -96,11 +94,16 @@
         if (this.opts.beforeShow.call(this) === false) return;
 
         if (!this.isReady) {
-            return this._loadImage(this.$link.attr(this.opts.linkAttribute), function() {
-                if (self.isMouseOver || !testMouseOver) {
-                    self.show(e);
+            return this._loadImage(
+                this.$image.attr(this.opts.zoomImageAttribute),
+                this.$image.attr(this.opts.zoomSrcsetAttribute),
+                this.$image.attr(this.opts.zoomSizesAttribute),
+                function() {
+                    if (self.isMouseOver || !testMouseOver) {
+                        self.show(e);
+                    }
                 }
-            });
+            );
         }
 
         this.$target.append(this.$flyout);
@@ -206,7 +209,7 @@
      * @param {String} href
      * @param {Function} callback
      */
-    EasyZoom.prototype._loadImage = function(href, callback) {
+    EasyZoom.prototype._loadImage = function(href, srcset, sizes, callback) {
         var zoom = new Image;
 
         this.$target
@@ -219,6 +222,8 @@
 
         zoom.style.position = 'absolute';
         zoom.src = href;
+        if (srcset) { zoom.srcset = srcset; }
+        if (sizes) { zoom.sizes = sizes; }
     };
 
     /**
@@ -279,7 +284,7 @@
      * @param {String} zoomHref
      * @param {String|Array} srcset (Optional)
      */
-    EasyZoom.prototype.swap = function(standardSrc, zoomHref, srcset) {
+    EasyZoom.prototype.swap = function(standardSrc, zoomHref, standardSrcset, zoomSrcset, standardSizes, zoomSizes) {
         this.hide();
         this.isReady = false;
 
@@ -291,10 +296,13 @@
 
         this.$image.attr({
             src: standardSrc,
-            srcset: $.isArray(srcset) ? srcset.join() : srcset
+            srcset: $.isArray(standardSrcset) ? standardSrcset.join() : standardSrcset,
+            sizes: $.isArray(standardSizes) ? standardSizes.join() : standardSizes
         });
 
-        this.$link.attr(this.opts.linkAttribute, zoomHref);
+        this.$image.attr(this.opts.zoomImageAttribute, zoomHref);
+        this.$image.attr(this.opts.zoomSrcsetAttribute, $.isArray(zoomSrcset) ? zoomSrcset.join() : zoomSrcset);
+        this.$image.attr(this.opts.zoomSizesAttribute, $.isArray(zoomSizes) ? zoomSizes.join() : zoomSizes);
     };
 
     /**
@@ -309,7 +317,6 @@
 
         this.detachNotice && clearTimeout(this.detachNotice);
 
-        delete this.$link;
         delete this.$zoom;
         delete this.$image;
         delete this.$notice;
