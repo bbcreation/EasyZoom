@@ -1,6 +1,6 @@
 {
   "name": "easyzoom",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "EasyZoom is an elegant, highly optimised jQuery image zoom and panning plugin based on the original work by Alen Grakalic.",
   "keywords": [
     "zoom",
@@ -23,8 +23,8 @@
     "jquery": ">=1.7"
   },
   "devDependencies": {
-    "grunt": "0.4.x",
-    "grunt-contrib-jshint": "0.9.x",
-    "grunt-contrib-uglify": "0.4.x"
+    "grunt": "1.0.x",
+    "grunt-contrib-jshint": "1.1.x",
+    "grunt-contrib-uglify": "2.1.x"
   }
 }
