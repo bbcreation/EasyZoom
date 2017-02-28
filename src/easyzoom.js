@@ -35,6 +35,15 @@
         // Data attribute to retrieve the zoom image sizes from.
         zoomSizesAttribute: 'data-zoom-sizes',
 
+        // Data attribute to enable fade in and fade out.
+        enableEasing: false,
+
+        // Easing duration in milliseconds.
+        easingDuration: 300,
+
+        // Easing duration in milliseconds.
+        easingType: 'linear',
+
         // Callback function to execute before the flyout is displayed.
         beforeShow: $.noop,
 
@@ -107,6 +116,9 @@
         }
 
         this.$target.append(this.$flyout);
+        if (this.opts.enableEasing) {
+            this.$flyout.fadeIn(this.opts.easingDuration, this.opts.easingType);
+        }
 
         w1 = this.$target.width();
         h1 = this.$target.height();
@@ -272,7 +284,13 @@
         if (!this.isOpen) return;
         if (this.opts.beforeHide.call(this) === false) return;
 
-        this.$flyout.detach();
+        if (this.opts.enableEasing) {
+            this.$flyout.fadeOut(this.opts.easingDuration, this.opts.easingType, function() {
+                $(this).detach();
+            });
+        } else {
+            this.$flyout.detach();
+        }
         this.isOpen = false;
 
         this.opts.onHide.call(this);
