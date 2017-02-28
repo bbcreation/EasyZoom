@@ -1,6 +1,6 @@
 {
-  "name": "easyzoom",
-  "version": "2.6.0",
+  "name": "easyzoomDPR",
+  "version": "2.6.1",
   "description": "EasyZoomDPR is an elegant, highly optimised jQuery image zoom and panning plugin based on the original work by Alen Grakalic and Matt Hinchliffe.",
   "keywords": [
     "zoom",
