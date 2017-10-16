@@ -44,6 +44,9 @@
         // Easing duration in milliseconds.
         easingType: 'linear',
 
+        // Show flyout if a mouse button is pressed.
+        showOnButtonPressed: true,
+
         // Callback function to execute before the flyout is displayed.
         beforeShow: $.noop,
 
@@ -244,6 +247,14 @@
      * @param {Event} e
      */
     EasyZoom.prototype._move = function(e) {
+
+        if (!this.opts.showOnButtonPressed) {
+            if (e.originalEvent.buttons > 0) {
+                this.$flyout.css('visibility', 'hidden');
+            } else {
+                this.$flyout.css('visibility', 'visible');
+            }
+        }
 
         if (e.type.indexOf('touch') === 0) {
             var touchlist = e.touches || e.originalEvent.touches;
